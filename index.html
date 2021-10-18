@@ -1,34 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Computing Assignment 2</title>
+    <title>19BCT0071</title>
+    <style>
+        label, button {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 40px;
+        }
+        input {
+            color: #232F3E;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        var callAPI = async (firstName,lastName)=>{
+            try {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                var raw = JSON.stringify({"firstName":firstName,"lastName":lastName});
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                let response = await fetch("https://nn5rrm2fma.execute-api.ap-south-1.amazonaws.com/Stage1", requestOptions);
+                response = await response.text();
+               await alert(response);
+            }catch (e){
+                console.log("error occurred!")
+            }  
+        }
+    </script>
 </head>
 <body>
-    <h1>Shivansh Sharma 19BCT0071</h1>
-    <img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(webp):focal(1227x235:1229x233)/origin-imgresizer.eurosport.com/2021/10/12/3235935-66235968-2560-1440.jpg" alt="image" width="400"/>
-    <hr/>
-    <br/>
-    <h4 style="color: red;"><i><b>Interests</b></i></h4>
-    <ul>
-        <li>Football</li>
-        <li>Programming</li>
-        <li>Web Development</li>
-        <li>Computer Science</li>
-    </ul>
-    <h4 style="color: red;"><i><b>Skills</b></i></h4>
-    <ul>
-        <li>Backend Web Development</li>
-        <li>Frontend Development</li>
-        <li>Python</li>
-        <li>Golang</li>
-    </ul>
-    <h4 style="color: red;"><i><b>Education</b></i></h4>
-    <ul>
-        <li>St. Mary's Academy, Meerut</li>
-        <li>Vellore Institute of Technology</li>
-    </ul>
+    <h2>Shivansh Sharma - 19BCT0071</h2>
+    <form>
+        <label>First Name :</label>
+        <input type="text" id="fName">
+        <label>Last Name :</label>
+        <input type="text" id="lName">
+        <button type="button" onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)">Call API</button>
+    </form>
 </body>
 </html>
